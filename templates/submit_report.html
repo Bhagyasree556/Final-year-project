@@ -1,0 +1,45 @@
+{% extends "buyerhome.html" %}
+{% block content %}
+
+<div class="container mt-5" style="max-width: 600px;">
+        <h2 class="text-center text-primary mb-4">Report Seller</h2>
+
+        {% if msg %}
+            <div class="alert alert-info text-center">
+                {{ msg }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            <div class="mb-3">
+                <label for="seller_email" class="form-label">Seller Email</label>
+                <input type="text" class="form-control" id="seller_email" name="seller_email" value="{{ seller_email }}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="buyer_email" class="form-label">Your Email</label>
+                <input type="text" class="form-control" id="buyer_email" name="buyer_email" value="{{ buyer_email }}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="product" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="product" name="product" value="{{ product }}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount Paid</label>
+                <input type="text" class="form-control" id="amount" name="amount" value="{{ amount }}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Report Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4" placeholder="Explain your issue (e.g., Product not received)..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-danger w-100">Submit Report</button>
+        </form>
+    </div>
+
+    <!-- JS -->
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

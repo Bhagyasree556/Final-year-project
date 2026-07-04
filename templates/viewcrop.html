@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Direct Marketing of Agriculture</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="Free HTML Templates" name="keywords" />
+  <meta content="Free HTML Templates" name="description" />
+
+  <!-- Favicon -->
+  <link href="/static/img/favicon.ico" rel="icon" />
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet" />
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Libraries Stylesheet -->
+  <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Template Stylesheet -->
+  <link href="/static/css/style.css" rel="stylesheet" />
+
+  <style>
+    /* Card Styling */
+  .card {
+      width: 22rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin: auto;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-img-top {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      object-fit: cover;
+      height: 200px;
+      width: 100%;
+    }
+
+    /* Text styling */
+    .long_text {
+      color: #212529;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      text-align: left;
+    }
+
+    /* Container adjustments */
+    .container.text-center .row {
+      justify-content: center;
+    }
+
+    /* QR code image styling */
+    .small-qr-code {
+      width: 160px;
+      margin-top: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .small-qr-code:hover {
+      transform: scale(1.05);
+    }
+
+    /* Offer Badge Styles */
+    .offer-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: bold;
+      z-index: 10;
+    }
+
+    .price-comparison {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 5px 0;
+    }
+
+    .original-price {
+      font-size: 14px;
+      color: #6c757d;
+    }
+
+    .current-price {
+      font-size: 18px;
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .offer-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .btn-offer {
+      font-size: 12px;
+      padding: 5px 10px;
+    }
+
+    .savings-text {
+      color: #28a745;
+      font-size: 12px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar Start -->
+  <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-5">
+    <a href="index.html" class="navbar-brand d-flex d-lg-none">
+      <h1 class="m-0 display-4 text-secondary"><span class="text-white">Farm</span>Fresh</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <div class="navbar-nav mx-auto py-0">
+        <a href="{{url_for('sellershome')}}" class="nav-item nav-link">Home</a>
+        <a href="{{url_for('viewcropprice')}}" class="nav-item nav-link">Provide Crop Information</a>
+        <a href="{{url_for('viewcrop')}}" class="nav-item nav-link active">View crop Details</a>
+        <!-- <a href="{{url_for('viewcropinfo')}}" class="nav-item nav-link">View Crop INformation</a> -->
+        <a href="{{url_for('Viewbuyerrequest')}}" class="nav-item nav-link">View Buyer Request</a>
+        <a href="{{url_for('farmeraccepteddata')}}" class="nav-item nav-link">Accept Data information</a>
+        <a href="{{url_for('viewframerpayment')}}" class="nav-item nav-link">View payment</a>
+        <a href="/" class="nav-item nav-link">Logout</a>
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar End -->
+
+  <!-- Crop Price Details Title -->
+  <center>
+    <h1 class="section-title bg-white text-center text-primary px-3 my-4">
+      My Crops & Special Offers
+    </h1>
+  </center>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="container">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- In your viewcrop.html, replace the entire card section with this: -->
+<div class="container text-center">
+    <div class="row">
+        {% for row in rows %}
+        <div class="col-md-4 col-sm-6 d-flex align-items-stretch">
+            <div class="card position-relative">
+                <!-- Offer Badge - FIXED INDEX -->
+                {% if row[13] is defined and row[13] is not none and row[13] > 0 %}
+                <div class="offer-badge">
+                    {{ row[13] }}% OFF
+                </div>
+                {% endif %}
+
+                <img src="{{ row[6] }}" alt="Image of {{ row[1] }}" class="card-img-top" />
+                <div class="card-body d-flex flex-column">
+                    <p class="long_text"><strong>Category:</strong> {{ row[2] }}</p>
+                    <p class="long_text"><strong>Crop Name:</strong> {{ row[1] }}</p>
+                    
+                    <!-- Price Display with Offer - FIXED INDEXES -->
+                    <div class="long_text">
+                        <strong>Price:</strong> 
+                        {% if row[13] is defined and row[13] is not none and row[13] > 0 %}
+                            <div class="price-comparison">
+                                <span class="original-price">₹{{ "%.2f"|format(row[16]) if row[16] is not none else row[3] }}</span>
+                                <span class="current-price">₹{{ row[3] }}/Kg</span>
+                            </div>
+                            <div class="savings-text">
+                                You save: {{ row[13] }}%
+                            </div>
+                        {% else %}
+                            <span>₹{{ row[3] }}/Kg</span>
+                        {% endif %}
+                    </div>
+
+                    <p class="long_text"><strong>Quantity:</strong> {{ row[11] }} Kg</p>
+                    <p class="long_text"><strong>Expected Yield Date:</strong> {{ row[5] }}</p>
+
+                    <!-- Offer Management Buttons - FIXED INDEX -->
+                    <div class="offer-actions mt-auto">
+                        {% if row[13] is defined and row[13] is not none and row[13] > 0 %}
+                            <a href="{{ url_for('add_offer', crop_id=row[0]) }}" class="btn btn-warning btn-offer">
+                                <i class="fas fa-edit me-1"></i>Edit Offer
+                            </a>
+                            <a href="{{ url_for('remove_offer', crop_id=row[0]) }}" class="btn btn-danger btn-offer" 
+                               onclick="return confirm('Are you sure you want to remove this offer?')">
+                                <i class="fas fa-times me-1"></i>Remove
+                            </a>
+                            {% if row[15] %}
+                            <small class="text-muted w-100 mt-1">Valid until: {{ row[15] }}</small>
+                            {% endif %}
+                        {% else %}
+                            <a href="{{ url_for('add_offer', crop_id=row[0]) }}" class="btn btn-success btn-offer">
+                                <i class="fas fa-tag me-1"></i>Add Offer
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    <!-- QR Code -->
+                    <a href="{{ row[12] }}" download="crop_image.png" title="Download QR Code">
+                        <img src="{{ row[12] }}" alt="QR code for {{ row[1] }}" class="small-qr-code mt-2" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/lib/easing/easing.min.js"></script>
+  <script src="/static/lib/waypoints/waypoints.min.js"></script>
+  <script src="/static/lib/counterup/counterup.min.js"></script>
+  <script src="/static/lib/owlcarousel/owl.carousel.min.js"></script>
+
+  <!-- Template Javascript -->
+  <script src="/static/js/main.js"></script>
+
+  {% if msg == 'Login successfull' %}
+  <script type="text/javascript">
+    alert("Admin Login successful");
+  </script>
+  {% endif %}
+</body>
+
+</html>
